@@ -1,0 +1,19 @@
+{
+  "name": "advent-of-code-2020",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "mocha --recursive src"
+  },
+  "devDependencies": {
+    "chai": "4.3.4",
+    "mocha": "9.1.3"
+  },
+  "mocha": {
+    "timeout": 60000,
+    "require": [
+      "chai/register-expect"
+    ]
+  }
+}
