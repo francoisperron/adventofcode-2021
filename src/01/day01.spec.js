@@ -11,15 +11,13 @@ const countLargerMeasurements = measurements => measurements
 
 const countLargerSumMeasurements = measurements => countLargerMeasurements(sumBy3(measurements))
 
-const sumBy3 = measurements => {
-  const sums = []
-  for (let i = 0; i < measurements.length; i++) {
-    sums.push(measurements[i])
-    sums[i - 1] += measurements[i]
-    sums[i - 2] += measurements[i]
-  }
-  return sums
-}
+const sumBy3 = measurements => measurements
+  .reduce((sums, measurement, i) => {
+    sums.push(measurement)
+    sums[i - 1] += measurement
+    sums[i - 2] += measurement
+    return sums
+  }, [])
 
 describe('Day 1: Sonar Sweep', () => {
 
@@ -63,5 +61,4 @@ describe('Day 1: Sonar Sweep', () => {
       expect(countLargerSumMeasurements(measurements)).to.equal(1158)
     })
   })
-
 })
