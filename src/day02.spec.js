@@ -1,4 +1,4 @@
-import { dailyInputLines } from '../dailyInput.js'
+import { dailyInputLines } from './dailyInput.js'
 
 const parse = command => {
   const commands = {
