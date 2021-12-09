@@ -18,36 +18,31 @@ export const parsePatternsAndOutput = (line) => {
 }
 
 export const decodePatterns = (patterns) => {
-  const decodingOrder = [1, 4, 7, 8, 6, 9, 0, 3, 5, 2]
   const decoded = {}
 
-  for (const number of decodingOrder) {
-    decoded[number] = patterns.find((pattern) => decodeNumber(number, pattern, decoded))
-  }
+  decoded[1] = patterns.find((p) => ofLength(p, 2))
+  decoded[4] = patterns.find((p) => ofLength(p, 4))
+  decoded[7] = patterns.find((p) => ofLength(p, 3))
+  decoded[8] = patterns.find((p) => ofLength(p, 7))
 
-  return swapKeyValue(decoded)
+  decoded[6] = patterns.find((p) => ofLength(p, 6) && withoutSegments(p, [decoded[1]]))
+  decoded[9] = patterns.find((p) => ofLength(p, 6) && withoutSegments(p, [decoded[6]]) && withSegment(p, decoded[4]))
+  decoded[0] = patterns.find((p) => ofLength(p, 6) && withoutSegments(p, [decoded[6], decoded[9]]))
+
+  decoded[3] = patterns.find((p) => ofLength(p, 5) && withSegment(p, decoded[1]))
+  decoded[5] = patterns.find((p) => ofLength(p, 5) && withoutSegments(p, [decoded[3]]) && withSegment(p, decoded[6]))
+  decoded[2] = patterns.find((p) => ofLength(p, 5) && withoutSegments(p, [decoded[3], decoded[5]]))
+
+  return decoded
 }
 
-const decoder = {
-  1: { length: 2, excludes: [], includes: [] },
-  4: { length: 4, excludes: [], includes: [] },
-  7: { length: 3, excludes: [], includes: [] },
-  8: { length: 7, excludes: [], includes: [] },
+export const decodeOutput = ({ patterns, output }) => parseInt(
+  output
+    .map((signal) => Object.keys(patterns).find(key => patterns[key] === signal))
+    .join(''))
 
-  6: { length: 6, excludes: [1], includes: [] },
-  9: { length: 6, excludes: [6], includes: [4] },
-  0: { length: 6, excludes: [6, 9], includes: [] },
+const ofLength = (pattern, length) => pattern.length === length
+const withSegment = (pattern, segment) => includes(pattern, segment)
+const withoutSegments = (pattern, segments) => segments.every(s => !includes(pattern, s))
 
-  3: { length: 5, excludes: [], includes: [1] },
-  5: { length: 5, excludes: [3], includes: [6] },
-  2: { length: 5, excludes: [3, 5], includes: [] }
-}
-
-const decodeNumber = (number, pattern, decoded) => pattern.length === decoder[number].length
-  && decoder[number].excludes.every(e => !includes(pattern, decoded[e]))
-  && decoder[number].includes.every(e => includes(pattern, decoded[e]))
-
-export const decodeOutput = ({ patterns, output }) => parseInt(output.map((signal) => patterns[signal]).join(''))
-
-const swapKeyValue = object => Object.assign({}, ...Object.entries(object).map(([a, b]) => ({ [b]: a })))
 const includes = (a, b) => b.split('').every(l => a.includes(l)) || a.split('').every(l => b.includes(l))

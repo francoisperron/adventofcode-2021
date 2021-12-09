@@ -45,12 +45,12 @@ describe('Day 8: Seven Segment Search', () => {
 
     it('decodes patterns', () => {
       const patterns = ['abcdefg', 'bcdef', 'acdfg', 'abcdf', 'abd', 'abcdef', 'bcdefg', 'abef', 'abcdeg', 'ab']
-      const decodedPatterns = { 'abcdeg': '0', 'ab': '1', 'acdfg': '2', 'abcdf': '3', 'abef': '4', 'bcdef': '5', 'bcdefg': '6', 'abd': '7', 'abcdefg': '8', 'abcdef': '9' }
+      const decodedPatterns = { '0': 'abcdeg', '1': 'ab', '2': 'acdfg', '3': 'abcdf', '4': 'abef', '5': 'bcdef', '6': 'bcdefg', '7': 'abd', '8': 'abcdefg', '9': 'abcdef' }
       expect(decodePatterns(patterns)).to.deep.equal(decodedPatterns)
     })
 
     it('decodes output', () => {
-      const decodedPatterns = { 'abcdeg': '0', 'ab': '1', 'acdfg': '2', 'abcdf': '3', 'abef': '4', 'bcdef': '5', 'bcdefg': '6', 'abd': '7', 'abcdefg': '8', 'abcdef': '9' }
+      const decodedPatterns = { '0': 'abcdeg', '1': 'ab', '2': 'acdfg', '3': 'abcdf', '4': 'abef', '5': 'bcdef', '6': 'bcdefg', '7': 'abd', '8': 'abcdefg', '9': 'abcdef' }
       const output = ['bcdef', 'abcdf', 'bcdef', 'abcdf']
       expect(decodeOutput({ patterns: decodedPatterns, output: output })).to.equal(5353)
     })
