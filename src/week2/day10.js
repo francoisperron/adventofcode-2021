@@ -12,7 +12,9 @@ export const middleScore = lines => {
 export const completeIncompleteLine = line => line
   .split('')
   .reduce((chunks, c) => opens.includes(c) ? [...chunks, c] : chunks.slice(0, -1), [])
-  .map(c => closeOf(c)).reverse().join('')
+  .map(c => closeOf(c))
+  .reverse()
+  .join('')
 
 export const calculateCompletionScore = line => line
   .split('')
