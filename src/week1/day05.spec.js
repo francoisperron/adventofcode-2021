@@ -1,4 +1,4 @@
-import { dailyInputLines } from './dailyInput.js'
+import { dailyInputLines } from '../dailyInput.js'
 import { numberOfPointsWithTwoLinesOverlapping, parseLineSegment } from './day05.js'
 
 describe('Day 5: Hydrothermal Venture', () => {

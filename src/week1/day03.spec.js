@@ -1,4 +1,4 @@
-import { dailyInputLines } from './dailyInput.js'
+import { dailyInputLines } from '../dailyInput.js'
 import { co2ScrubberRating, keepCommonBitAt, lifeSupportRating, mostCommonBitAt, oxygenGeneratorRating, parseInput, powerConsumption } from './day03.js'
 
 describe('Day 3: Binary Diagnostic', () => {

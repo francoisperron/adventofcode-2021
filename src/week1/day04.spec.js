@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { dailyInput } from './dailyInput.js'
+import { dailyInput } from '../dailyInput.js'
 import { bingo, lastWinningBoardScore, parseBingo, sumOfNotDrawnNumbers, winningBoardScore } from './day04.js'
 
 describe('Day 4: Giant Squid', () => {

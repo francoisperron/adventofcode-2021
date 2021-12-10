@@ -1,4 +1,4 @@
-import { dailyInputLines } from './dailyInput.js'
+import { dailyInputLines } from '../dailyInput.js'
 
 const countLargerMeasurements = measurements => measurements
   .map((_, i) => measurements[i] > measurements[i - 1])

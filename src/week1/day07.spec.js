@@ -1,4 +1,4 @@
-import { dailyInput } from './dailyInput.js'
+import { dailyInput } from '../dailyInput.js'
 
 const minimumFuelSpentToAlign = (crabs) => {
   const possibleOutcomes = crabs.map(c => fuelSpent(crabs, c))

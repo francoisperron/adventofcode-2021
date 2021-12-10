@@ -1,6 +1,6 @@
 // noinspection SpellCheckingInspection
 
-import { dailyInputLines } from './dailyInput.js'
+import { dailyInputLines } from '../dailyInput.js'
 import { count1478, decodeOutput, decodePart2, decodePatterns, parsePatternsAndOutput } from './day08.js'
 
 describe('Day 8: Seven Segment Search', () => {

@@ -1,4 +1,4 @@
-import { dailyInput } from './dailyInput.js'
+import { dailyInput } from '../dailyInput.js'
 import { isLowPoint, largestBasinsProduct, parseHeightMap, riskLevelOf } from './day09.js'
 
 describe('Day 9: Smoke Basin', () => {

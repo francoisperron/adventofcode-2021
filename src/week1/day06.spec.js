@@ -1,4 +1,4 @@
-import { dailyInput } from './dailyInput.js'
+import { dailyInput } from '../dailyInput.js'
 
 const simulateLanternFish = (fish, days) => days === 0
   ? fish
