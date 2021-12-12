@@ -1,5 +1,5 @@
 import { dailyInput } from '../dailyInput.js'
-import { parseCaves, smallCavesVisitedTwice, travel, travel2 } from './day12.js'
+import { parseCaves, smallCavesVisitedTwice, visitCaveSystemPart1, visitCaveSystemPart2 } from './day12.js'
 
 describe('Day 12: Passage Pathing', () => {
 
@@ -28,20 +28,30 @@ describe('Day 12: Passage Pathing', () => {
       })
     })
 
-    it('travels from start to ends', () => {
-      const caves = parseCaves(example)
-      const currentPath = ['start']
-      const paths = []
+    it('parses caves ignoring start as an end', () => {
+      expect(parseCaves(input)).to.deep.equal({
+        'CV': ['mk', 'gm', 'kt', 'ml'],
+        'IK': ['gm', 'mk', 'ml'],
+        'VS': ['ca'],
+        'ca': ['sk', 'sx', 'VS', 'kt', 'end', 'ml'],
+        'end': ['sx', 'sk', 'ca'],
+        'gm': ['IK', 'sk', 'CV', 'ml'],
+        'gy': ['sx'],
+        'kt': ['sk', 'ml', 'ca', 'sx', 'CV'],
+        'mk': ['CV', 'sx', 'IK', 'ml'],
+        'ml': ['kt', 'ca', 'mk', 'CV', 'gm', 'IK'],
+        'sk': ['gm', 'ca', 'kt', 'end'],
+        'start': ['gm', 'CV', 'IK'],
+        'sx': ['mk', 'ca', 'end', 'gy', 'kt']
+      })
+    })
 
-      expect(travel({ currentPath, caves, paths }).paths.length).to.equal(10)
+    it('travels from start to ends', () => {
+      expect(visitCaveSystemPart1(example)).to.equal(10)
     })
 
     it('solves it', () => {
-      const caves = parseCaves(input)
-      const currentPath = ['start']
-      const paths = []
-
-      expect(travel({ currentPath, caves, paths }).paths.length).to.equal(4186)
+      expect(visitCaveSystemPart1(input)).to.equal(4186)
     })
   })
 
@@ -58,11 +68,7 @@ describe('Day 12: Passage Pathing', () => {
     })
 
     it('solves example', () => {
-      const caves = parseCaves(example)
-      const currentPath = ['start']
-      const paths = []
-
-      expect(travel2({ currentPath, caves, paths }).paths.length).to.equal(36)
+      expect(visitCaveSystemPart2(example)).to.equal(36)
     })
 
     it('solves larger example', () => {
@@ -86,19 +92,11 @@ describe('Day 12: Passage Pathing', () => {
         'pj-fs\n' +
         'start-RW'
 
-      const caves = parseCaves(larger)
-      const currentPath = ['start']
-      const paths = []
-
-      expect(travel2({ currentPath, caves, paths }).paths.length).to.equal(3509)
+      expect(visitCaveSystemPart2(larger)).to.equal(3509)
     })
 
     it('solves it', () => {
-      const caves = parseCaves(input)
-      const currentPath = ['start']
-      const paths = []
-
-      expect(travel2({ currentPath, caves, paths }).paths.length).to.equal(92111)
+      expect(visitCaveSystemPart2(input)).to.equal(92111)
     })
   })
 })

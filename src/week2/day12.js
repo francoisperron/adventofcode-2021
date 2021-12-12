@@ -1,17 +1,11 @@
 // part 2
-export const travel2 = ({ currentPath, caves, paths }) => {
-  const currentCave = currentPath.at(-1)
+export const visitCaveSystemPart2 = input => {
+  const caves = parseCaves(input)
+  const currentPath = ['start']
+  const paths = []
+  const rule = (path, cave) => isABigCave(cave) || !smallCavesVisitedTwice(path, cave)
 
-  if (currentCave === 'end') {
-    paths.push(currentPath)
-    return { currentPath, caves, paths }
-  }
-
-  return caves[currentCave]
-    .filter(cave => cave === cave.toUpperCase() || (!smallCavesVisitedTwice(currentPath, cave) && cave !=='start'))
-    .reduce((result, cave) => {
-      return travel2({ currentPath: [...currentPath, cave], caves: caves, paths: result.paths })
-    }, { currentPath, caves, paths })
+  return travel({ currentPath, caves, paths, rule }).paths.length
 }
 
 export const smallCavesVisitedTwice = (path, cave) => {
@@ -20,7 +14,16 @@ export const smallCavesVisitedTwice = (path, cave) => {
 }
 
 // part 1
-export const travel = ({ currentPath, caves, paths }) => {
+export const visitCaveSystemPart1 = input => {
+  const caves = parseCaves(input)
+  const currentPath = ['start']
+  const paths = []
+  const rule = (path, cave) => isABigCave(cave) || !path.includes(cave)
+
+  return travel({ currentPath, caves, paths, rule }).paths.length
+}
+
+export const travel = ({ currentPath, caves, paths, rule }) => {
   const currentCave = currentPath.at(-1)
 
   if (currentCave === 'end') {
@@ -29,19 +32,24 @@ export const travel = ({ currentPath, caves, paths }) => {
   }
 
   return caves[currentCave]
-    .filter(cave => cave === cave.toUpperCase() || !currentPath.includes(cave))
+    .filter(cave => rule(currentPath, cave))
     .reduce((result, cave) => {
-      return travel({ currentPath: [...currentPath, cave], caves: caves, paths: result.paths })
-    }, { currentPath, caves, paths })
+      return travel({ currentPath: [...currentPath, cave], caves: caves, paths: result.paths, rule })
+    }, { currentPath, caves, paths, rule })
 }
+
+const isABigCave = cave => cave === cave.toUpperCase()
 
 export const parseCaves = (input) => input
   .split('\n')
   .reduce((caves, line) => {
     const [start, end] = line.split('-')
-    caves[start] === undefined ? caves[start] = [end] : caves[start] = [...caves[start], end]
-    if (start !== 'start' && end !== 'end') {
-      caves[end] === undefined ? caves[end] = [start] : caves[end] = [...caves[end], start]
-    }
+
+    if (end !== 'start')
+      caves[start] = caves[start] === undefined ? [end] : [...caves[start], end]
+
+    if (start !== 'start' && end !== 'end')
+      caves[end] = caves[end] === undefined ? [start] : [...caves[end], start]
+
     return caves
   }, {})
