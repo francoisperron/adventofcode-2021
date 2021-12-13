@@ -57,7 +57,7 @@ describe('Day 13: Transparent Origami', () => {
       for (let y = 0; y < maxY + 1; y++) {
         code[y] = []
         for (let x = 0; x < maxX + 1; x++) {
-          code[y][x] = '.'
+          code[y][x] = ' '
         }
       }
       for (const dot of result) {
@@ -73,10 +73,12 @@ describe('Day 13: Transparent Origami', () => {
 const fold = (dots, fold) => fold.axis === 'y'
   ? dots
     .map(dot => dot.y < fold.value ? dot : { x: dot.x, y: fold.value * 2 - dot.y })
-    .filter((dot, index, dots) => dots.findIndex(dot2 => (dot2.x === dot.x && dot2.y === dot.y)) === index)
+    .filter(unique)
   : dots
     .map(dot => dot.x < fold.value ? dot : { x: fold.value * 2 - dot.x, y: dot.y })
-    .filter((dot, index, dots) => dots.findIndex(dot2 => (dot2.x === dot.x && dot2.y === dot.y)) === index)
+    .filter(unique)
+
+const unique = (dot, index, dots) => dots.findIndex(dot2 => (dot2.x === dot.x && dot2.y === dot.y)) === index
 
 const parseInstructions = input => {
   const [dots, folds] = input.split('\n\n').map(i => i.split('\n'))
