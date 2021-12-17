@@ -40,9 +40,9 @@ describe('Day 15: Chiton', () => {
     })
 
     // 2.5 secs
-    it('solves it', () => {
-      const cave = buildFullCave(parseCave(input))
-      expect(caveLowestRiskLevel(cave)).to.equal(2948)
-    })
+    // it('solves it', () => {
+    //   const cave = buildFullCave(parseCave(input))
+    //   expect(caveLowestRiskLevel(cave)).to.equal(2948)
+    // })
   })
 })
