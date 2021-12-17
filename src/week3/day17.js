@@ -1,30 +1,20 @@
-export const fireProbeFindingAllVelocityThatHits = input => {
+export const fireProbeFindingAllVelocityThatHits = input => fireProbes(input)
+    .reduce((hits, result) => result.hits ? hits + 1 : hits, 0)
+
+export const fireProbeFindingHighestY = input => fireProbes(input)
+    .filter(result => result.hits)
+    .map(result => highestYOf(result.positions))
+    .reduce((highestY, y) => highestY < y ? y : highestY, 0)
+
+const fireProbes = input => {
   const target = parseTargetArea(input)
 
   const velocities = range(1, target.maxX + 1)
     .map(x => range(target.minY, Math.abs(target.minY)).map(y => xy(x, y)))
     .flat()
 
-  return velocities.reduce((hits, velocity) => {
-    const data = { target, position: xy(0, 0), velocity, positions: [] }
-    const result = fireProbe(data)
-    return result.hits ? hits + 1 : hits
-  }, 0)
-}
-
-export const fireProbeFindingHighestY = input => {
-  const target = parseTargetArea(input)
-
-  const velocities = range(1, target.maxX + 1)
-    .map(x => range(target.minY, Math.abs(target.minY)).map(y => xy(x, y)))
-    .flat()
-
-  return velocities.reduce((highestY, velocity) => {
-    const data = { target, position: xy(0, 0), velocity, positions: [] }
-    const result = fireProbe(data)
-    const currentHighestY = highestYOf(result.positions)
-    return result.hits && highestY < currentHighestY ? currentHighestY : highestY
-  }, 0)
+  return velocities
+    .map(velocity => fireProbe({ target, position: xy(0, 0), velocity, positions: [] }))
 }
 
 export const fireProbe = ({ target, position, velocity, positions }) => {
@@ -72,6 +62,6 @@ export const parseTargetArea = input => {
   }
 }
 
-const range = (start, end) => Array(end - start + 1).fill().map((_, idx) => start + idx)
+const range = (start, end) => Array(end - start + 1).fill(0).map((_, idx) => start + idx)
 export const highestYOf = positions => Math.max(...positions.map(p => p.y))
 export const xy = (x, y) => ({ x, y })
