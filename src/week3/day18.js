@@ -27,17 +27,15 @@ export const magnitudeOf = number => Array.isArray(number)
   : number
 
 export const reduces = number => {
-  while (true) {
-    const current = number
+  const exploded = explodes(number)
+  if (number !== exploded)
+    return reduces(exploded)
 
-    number = explodes(current)
-    if (number !== current) continue
+  const split = splits(number)
+  if (number !== split)
+    return reduces(split)
 
-    number = splits(current)
-    if (number !== current) continue
-
-    return current
-  }
+  return number
 }
 
 export const adds = (number1, number2) => `[${number1},${number2}]`
