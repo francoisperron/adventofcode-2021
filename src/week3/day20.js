@@ -3,11 +3,13 @@ export const enhanceImageMultipleTimes = (input, times) => {
   const enhanceImageWithAlgo = enhanceImage(algo)
 
   return repeat(times)
-    .reduce((current, _, index) => enhanceImageWithAlgo(current, defaultPixelValue(index)), image)
+    .reduce((current, _, index) => enhanceImageWithAlgo(current, defaultPixelValue(algo, index)), image)
     .join('').split('').filter(pixel => pixel === '#').length
 }
 
-const defaultPixelValue = index => index % 2 ? '1' : '0'
+const defaultPixelValue = (algo, index) => algo[0] === '#'
+  ? index % 2 ? '1' : '0'
+  : '0'
 
 const enhanceImage = algo => (image, defaultPixelValue) =>
   range(-1, image.length)

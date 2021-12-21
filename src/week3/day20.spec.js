@@ -7,7 +7,16 @@ describe('Day 20: Trench Map', () => {
     input = await dailyInput(20)
   })
 
-  describe('Part 1: How many pixels are lit in the resulting image?', () => {
+  const example =
+    '..#.#..#####.#.#.#.###.##.....###.##.#..###.####..#####..#....#..#..##..###..######.###...####..#..#####..##..#.#####...##.#.#..#.##..#.#......#.###.######.###.####...#.##.##..#..#..#####.....#.#....###..#.##......#.....#..#..#..##..#...##.######.####.####.#.#...#.......#..#.#.#...####.##.#......#..#...##.#.##..#...##.#.##..###.#......#.#.......#.#.#.####.###.##...#.....####.#..#..#.##.#....##..#.####....##...##..#...#......#.#.......#.......##..####..#...#.#.#...##..#.#..###..#####........#..####......#..#\n' +
+    '\n' +
+    '#..#.\n' +
+    '#....\n' +
+    '##..#\n' +
+    '..#..\n' +
+    '..###'
+
+  describe('Part 1: How many pixels are lit in the resulting image? (2 times)', () => {
     it('parses image enhancement algorithm and image', () => {
       const { algo, image } = parseAlgoAndImage(input)
 
@@ -27,12 +36,20 @@ describe('Day 20: Trench Map', () => {
       expect(transformationIndexOf(99, 99, image, '1')).to.equal(367)
     })
 
+    it('solves example', () => {
+      expect(enhanceImageMultipleTimes(example, 2)).to.equal(35)
+    })
+
     it('solves it', () => {
       expect(enhanceImageMultipleTimes(input, 2)).to.equal(5065)
     })
   })
 
-  describe('Part 2: ', () => {
+  describe('Part 2: How many pixels are lit in the resulting image? (50 times)', () => {
+    it('solves example', () => {
+      expect(enhanceImageMultipleTimes(example, 50)).to.equal(3351)
+    })
+
     it('solves it', () => {
       expect(enhanceImageMultipleTimes(input, 50)).to.equal(14790)
     })
