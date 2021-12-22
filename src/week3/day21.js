@@ -16,7 +16,8 @@ export const playWithDiracDice = (game, games = []) => {
 }
 
 const rollDiracDice = (game, games) => {
-  let totalWins = { player1: 0, player2: 0 }
+  let wins = { player1: 0, player2: 0 }
+
   for (let rollsSum = 3; rollsSum <= 9; rollsSum++) {
     const newGame = {
       player1Plays: !game.player1Plays,
@@ -24,13 +25,13 @@ const rollDiracDice = (game, games) => {
       player2: game.player1Plays ? game.player2 : move(game.player2, rollsSum)
     }
 
-    const wins = playWithDiracDice(newGame, games)
+    const newWins = playWithDiracDice(newGame, games)
 
-    totalWins.player1 += rollsSumCount[rollsSum] * wins.player1
-    totalWins.player2 += rollsSumCount[rollsSum] * wins.player2
+    wins.player1 += rollsSumCount[rollsSum] * newWins.player1
+    wins.player2 += rollsSumCount[rollsSum] * newWins.player2
   }
 
-  return totalWins
+  return wins
 }
 
 const rollsSumCount = { 3: 1, 4: 3, 5: 6, 6: 7, 7: 6, 8: 3, 9: 1 }
