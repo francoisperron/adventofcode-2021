@@ -1,5 +1,4 @@
 // part 2
-
 export const executeFullRebootSteps = input => parseRebootSteps(input)
   .reduce((intersections, step) => findIntersections(intersections, step), [])
   .map(cubeValue).reduce(sum)
@@ -14,7 +13,6 @@ const findIntersections = (intersections, step) => {
   }
   return [...intersections, ...newIntersections]
 }
-
 
 export const intersect = (cube1, cube2) => {
   const intersection = {
@@ -34,30 +32,15 @@ export const cubeValue = cube => (cube.on ? 1 : -1) *
   (cube.z.max + 1 - cube.z.min)
 
 // part 1
-export const executeRebootSteps = input => {
+export const executeRebootSteps = input => parseRebootSteps(input)
+  .filter(isStepInside)
+  .reduce((intersections, step) => findIntersections(intersections, step), [])
+  .map(cubeValue).reduce(sum)
 
-  let steps = parseRebootSteps(input)
-  steps = removeStepsOutside(steps)
-
-  const cubes = steps.reduce((cubes, step) => {
-    range(step.x.min, step.x.max).map(x => {
-      range(step.y.min, step.y.max).map(y => {
-        range(step.z.min, step.z.max).map(z => {
-          cubes[hash(x, y, z)] = step.on
-        })
-      })
-    })
-    return cubes
-  }, {})
-
-  return Object.values(cubes).filter(on => on === true).length
-}
-
-export const removeStepsOutside = steps => steps
-  .filter(step =>
-    step.x.min >= -50 && step.x.max <= 50 &&
-    step.y.min >= -50 && step.y.max <= 50 &&
-    step.z.min >= -50 && step.z.max <= 50)
+export const isStepInside = step =>
+  step.x.min >= -50 && step.x.max <= 50 &&
+  step.y.min >= -50 && step.y.max <= 50 &&
+  step.z.min >= -50 && step.z.max <= 50
 
 export const parseRebootSteps = input => input.map(parseRebootStep)
 
@@ -72,6 +55,4 @@ const parseRebootStep = line => {
   }
 }
 
-const range = (start, end) => Array(end - start + 1).fill(0).map((_, idx) => start + idx)
-const hash = (x, y, z) => x + ',' + y + ',' + z
 const sum = (sum, on) => sum + on
